@@ -1,0 +1,7 @@
+.env
+venv/
+__pycache__/
+*.pyc
+repo_data.csv
+installed_packages.txt
+.cache/

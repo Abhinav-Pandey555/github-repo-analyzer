@@ -1,0 +1,15 @@
+streamlit==1.35.0 
+requests==2.34.2 
+python-dotenv==1.0.0 
+pandas==2.0.2 
+langchain==0.2.16 
+langchain-community==0.2.16 
+langchain-core==0.2.43 
+langchain-text-splitters==0.2.4 
+langchain-google-genai==1.0.5 
+google-generativeai==0.5.4 
+faiss-cpu==1.7.4 
+PyGithub==1.58.2 
+pydantic==2.7.1 
+numpy==1.24.3 
+tiktoken==0.4.0 
