@@ -70,7 +70,7 @@ These instructions will help you set up the project and run it on your local mac
 
 1. Run the streamlit application.
    ```
-   streamlit run main.py
+    streamlit run main.py
    ```
 
 2. Open your web browser and enter the URL shown in the terminal, usually `http://localhost:8501`
