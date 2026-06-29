@@ -29,7 +29,7 @@ These instructions will help you set up the project and run it on your local mac
 
 1. Clone this repository to your local machine.
    ```
-   git clone https://github.com/jitinchekka/github-repo-analyzer.git
+   git clone https://github.com/Abhinav-Pandey555/github-repo-analyzer
    ```
 
 2. Go to the project folder.
@@ -65,14 +65,14 @@ These instructions will help you set up the project and run it on your local mac
    ```
    GITHUB_TOKEN="MY-TOKEN"
    OPENAI_API_KEY="MY-KEY"
-   ACTIVELOOP_TOKEN="MY-TOKEN"
-   ```
+    
+  ```
 
 ## Running the application
 
 1. Run the streamlit application.
    ```
-   streamlit run app.py
+   streamlit run main.py
    ```
 
 2. Open your web browser and enter the URL shown in the terminal, usually `http://localhost:8501`
@@ -97,13 +97,7 @@ Contributions to the GitHub Repository Analyzer are welcome! If you find any iss
 
 ## Acknowledgments
 
-The GitHub Repository Analyzer was inspired by the Github Automated Analysis Project by Mercor. It utilizes the power of GPT and LangChain, both of which are incredible technologies.
-
-## Contact
-
-If you have any questions or need further assistance, please feel free to contact me at the following email address
-
-- Jitin (jitinchekka2@gmail.com)
+The GitHub Repository Analyzer was inspired by the Github Automated Analysis Project by Mercor. It utilizes the power of Gemini and LangChain, both of which are incredible technologies.
 
 Happy analyzing and coding!
 
