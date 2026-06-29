@@ -86,16 +86,8 @@ The GitHub Repository Analyzer allows you to customize certain parameters to adj
 - [Python](https://www.python.org/)
 - [Streamlit](https://www.streamlit.io/)
 - [LangChain](https://langchain.com/)
-- [OpenAI API](https://platform.openai.com/docs/introduction)
+- [Gemini API](https://aistudio.google.com/)
 - [FAISS](https://faiss.ai/index.html) 
-
-## Contributing
-
-Contributions to the GitHub Repository Analyzer are welcome! If you find any issues or have ideas for improvements, feel free to open an issue or submit a pull request. Please ensure that you adhere to the project's code of conduct.
-
-## Acknowledgments
-
-The GitHub Repository Analyzer was inspired by the Github Automated Analysis Project by Mercor. It utilizes the power of Gemini and LangChain, both of which are incredible technologies.
 
 Happy analyzing and coding!
 
