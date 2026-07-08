@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import os
+import time
 from dotenv import load_dotenv
 import pandas as pd
 from langchain_google_genai import GoogleGenerativeAI, GoogleGenerativeAIEmbeddings
@@ -19,7 +20,7 @@ if os.getenv('GEMINI_API_KEY'):
 if os.getenv('GITHUB_TOKEN'):
     os.environ['GITHUB_TOKEN'] = os.getenv('GITHUB_TOKEN')
 
-# ── Page Config (must be first Streamlit command) ────────────────────────────
+# ── Page Config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="GitHub Repo Analyzer",
     page_icon="🔍",
@@ -78,8 +79,27 @@ st.markdown("""
             border: 1px solid #1f6feb;
             border-radius: 8px;
         }
+        /* KPI metric cards */
+        [data-testid="stMetric"] {
+            background-color: #161b22;
+            border: 1px solid #1f6feb;
+            border-radius: 8px;
+            padding: 12px;
+        }
+        [data-testid="stMetricLabel"] {
+            color: #388bfd !important;
+        }
+        [data-testid="stMetricValue"] {
+            color: #e6edf3 !important;
+        }
     </style>
 """, unsafe_allow_html=True)
+
+
+# ── Token estimator ──────────────────────────────────────────────────────────
+def estimate_tokens(text):
+    # Rough estimate: 1 token ≈ 4 characters
+    return len(str(text)) // 4
 
 
 # ── Fetch GitHub repos via REST API ─────────────────────────────────────────
@@ -133,13 +153,15 @@ def build_vector_store(username):
             "url": repo.html_url,
         })
 
+    # ── KPI: Repos Analyzed Count ────────────────────────────────────────────
+    st.session_state.repos_analyzed = len(repo_info)
+
     df = pd.DataFrame(repo_info)
     df.to_csv("repo_data.csv", index=False)
 
     loader = CSVLoader(file_path="repo_data.csv", encoding="utf-8")
     docs = loader.load()
 
-    # ✅ Fixed: correct embedding model name
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
     vector_store = FAISS.from_documents(docs, embeddings)
     return vector_store
@@ -183,8 +205,21 @@ Analysis: <detailed explanation of why it is the most complex>
 
 Make the repository link clickable: [Repository Name](Repository Link)
 """
-    result = qa_chain({"question": query})
-    return result["answer"]
+    # ── KPI: Response Time - Start ───────────────────────────────────────────
+    start_time = time.time()
+
+    result = qa_chain.invoke({"question": query})
+    answer = result["answer"]
+
+    # ── KPI: Response Time - End ─────────────────────────────────────────────
+    end_time = time.time()
+    st.session_state.response_time = round(end_time - start_time, 2)
+
+    # ── KPI: Token Usage ─────────────────────────────────────────────────────
+    tokens_used = estimate_tokens(query) + estimate_tokens(answer)
+    st.session_state.total_tokens += tokens_used
+
+    return answer
 
 
 # ── Main app ─────────────────────────────────────────────────────────────────
@@ -201,6 +236,14 @@ def main():
         st.session_state.qa_chain = None
     if "analyzed" not in st.session_state:
         st.session_state.analyzed = False
+
+    # ── KPI Session State Init ───────────────────────────────────────────────
+    if "response_time" not in st.session_state:
+        st.session_state.response_time = 0.0
+    if "repos_analyzed" not in st.session_state:
+        st.session_state.repos_analyzed = 0
+    if "total_tokens" not in st.session_state:
+        st.session_state.total_tokens = 0
 
     # ── Sidebar ──────────────────────────────────────────────────────────────
     username = st.sidebar.text_input("Enter GitHub Username")
@@ -220,6 +263,9 @@ def main():
         st.session_state.chat_history = []
         st.session_state.qa_chain = None
         st.session_state.analyzed = False
+        st.session_state.response_time = 0.0
+        st.session_state.repos_analyzed = 0
+        st.session_state.total_tokens = 0
 
     # ── Main Analysis ────────────────────────────────────────────────────────
     if submit_button and username:
@@ -241,6 +287,32 @@ def main():
                 "content": analysis
             })
             st.session_state.analyzed = True
+
+    # ── KPI Dashboard ────────────────────────────────────────────────────────
+    if st.session_state.analyzed:
+        st.divider()
+        st.subheader("📊 Performance Metrics")
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            st.metric(
+                label="⏱️ Response Time",
+                value=f"{st.session_state.response_time}s",
+                help="Time taken by Gemini AI to analyze repositories"
+            )
+        with col2:
+            st.metric(
+                label="📁 Repos Analyzed",
+                value=st.session_state.repos_analyzed,
+                help="Total non-fork repositories found and analyzed"
+            )
+        with col3:
+            st.metric(
+                label="🔢 Tokens Used (est.)",
+                value=f"{st.session_state.total_tokens:,}",
+                help="Estimated tokens consumed in this session"
+            )
 
     # ── Q&A Chat Section ─────────────────────────────────────────────────────
     if st.session_state.qa_chain and st.session_state.analyzed:
@@ -264,9 +336,20 @@ def main():
 
             with st.chat_message("assistant"):
                 with st.spinner("Thinking..."):
-                    result = st.session_state.qa_chain({"question": user_input})
+                    # ── KPI: Response Time for Q&A ───────────────────────────
+                    qa_start = time.time()
+
+                    result = st.session_state.qa_chain.invoke({"question": user_input})
                     answer = result["answer"]
+
+                    # ── KPI: Update Response Time & Tokens ───────────────────
+                    st.session_state.response_time = round(time.time() - qa_start, 2)
+                    st.session_state.total_tokens += (
+                        estimate_tokens(user_input) + estimate_tokens(answer)
+                    )
+
                     st.markdown(answer)
+
             st.session_state.chat_history.append({
                 "role": "assistant",
                 "content": answer
