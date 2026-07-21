@@ -14,7 +14,7 @@ The GitHub Repository Analyzer uses the following steps to determine the most te
 It uses [Langchain](https://langchain.com/), OpenAI API (gpt-3.5-turbo model), and FAISS as vector store which efficient Prompt Engineering under the hood. It considers different factors for determining the most complex repository such as algorithmic complexity, code complexity, coupling and cohesion between classes and modules, cyclomatic complexity, number of contributions, pull requests, issues, and other relevant metrics.
 
 ## Demo
-[Demo](https://jitin-git-repo.streamlit.app/)
+[Demo](https://repo-analyser.streamlit.app/)
 ## Getting Started
 
 These instructions will help you set up the project and run it on your local machine.
@@ -63,16 +63,18 @@ These instructions will help you set up the project and run it on your local mac
    ```
    Add your GitHub API token, OPENAI_API_KEY, ACTIVELOOP_TOKEN to the `.env` file in the following format:
    ```
-   GITHUB_TOKEN="MY-TOKEN"
-   OPENAI_API_KEY="MY-KEY"
-   ACTIVELOOP_TOKEN="MY-TOKEN"
+   GEMINI_API_KEY="MY-KEY"
+   GITHUB_TOKEN="MY-TOKEN" 
+   GEMINI_MODEL=gemini-3.1-flash-lite
+   GEMINI_EMBEDDING_MODEL=models/gemini-embedding-001
+
    ```
 
 ## Running the application
 
 1. Run the streamlit application.
    ```
-   streamlit run app.py
+   streamlit run main.py
    ```
 
 2. Open your web browser and enter the URL shown in the terminal, usually `http://localhost:8501`
@@ -88,7 +90,7 @@ The GitHub Repository Analyzer allows you to customize certain parameters to adj
 - [Python](https://www.python.org/)
 - [Streamlit](https://www.streamlit.io/)
 - [LangChain](https://langchain.com/)
-- [OpenAI API](https://platform.openai.com/docs/introduction)
+- [OpenAI API](https://ai.google.dev/gemini-api/docs)
 - [FAISS](https://faiss.ai/index.html) 
 
 ## Contributing
@@ -97,13 +99,8 @@ Contributions to the GitHub Repository Analyzer are welcome! If you find any iss
 
 ## Acknowledgments
 
-The GitHub Repository Analyzer was inspired by the Github Automated Analysis Project by Mercor. It utilizes the power of GPT and LangChain, both of which are incredible technologies.
+The GitHub Repository Analyzer was inspired by the Github Automated Analysis Project by Mercor. It utilizes the power of Gemini and LangChain, both of which are incredible technologies.
 
-## Contact
-
-If you have any questions or need further assistance, please feel free to contact me at the following email address
-
-- Jitin (jitinchekka2@gmail.com)
 
 Happy analyzing and coding!
 
