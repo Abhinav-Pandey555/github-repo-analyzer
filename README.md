@@ -29,7 +29,7 @@ These instructions will help you set up the project and run it on your local mac
 
 1. Clone this repository to your local machine.
    ```
-   git clone https://github.com/jitinchekka/github-repo-analyzer.git
+   git clone https://github.com/Abhinav-Pandey555/github-repo-analyzer.git
    ```
 
 2. Go to the project folder.
@@ -96,10 +96,6 @@ The GitHub Repository Analyzer allows you to customize certain parameters to adj
 ## Contributing
 
 Contributions to the GitHub Repository Analyzer are welcome! If you find any issues or have ideas for improvements, feel free to open an issue or submit a pull request. Please ensure that you adhere to the project's code of conduct.
-
-## Acknowledgments
-
-The GitHub Repository Analyzer was inspired by the Github Automated Analysis Project by Mercor. It utilizes the power of Gemini and LangChain, both of which are incredible technologies.
 
 
 Happy analyzing and coding!
