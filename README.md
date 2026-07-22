@@ -90,7 +90,7 @@ The GitHub Repository Analyzer allows you to customize certain parameters to adj
 - [Python](https://www.python.org/)
 - [Streamlit](https://www.streamlit.io/)
 - [LangChain](https://langchain.com/)
-- [OpenAI API](https://ai.google.dev/gemini-api/docs)
+- [Gemini API](https://ai.google.dev/gemini-api/docs)
 - [FAISS](https://faiss.ai/index.html) 
 
 ## Contributing
