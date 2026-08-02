@@ -1,5 +1,5 @@
 # Github Automated Analysis Project
-   The GitHub Repository Analyzer is a Python-based tool that helps you find the most technically complex and challenging repository from a GitHub user's profile. By utilizing advanced language models such as GPT and LangChain, the tool can assess each repository individually and make an informed decision about the repository's technical complexity.
+   The GitHub Repository Analyzer is a Python-based tool that helps you find the most technically complex and challenging repository from a GitHub user's profile.
 
 
 ## How It Works
@@ -7,11 +7,9 @@ The GitHub Repository Analyzer uses the following steps to determine the most te
 
 1. **Input**: Provide the GitHub user's URL as input to the tool.
 2. **Fetch Repositories**: The tool will fetch all public repositories from the provided user's GitHub profile using the GitHub API.
-3. **Assessment**: For each repository, the tool will utilize the power of GPT and LangChain to assess its technical complexity and challenges based on various factors such as code complexity, usage of advanced algorithms, number of contributions, pull requests, issues, and other relevant metrics.
+3. **Assessment**: For each repository, the tool will utilize the power of Gemini and LangChain to assess its technical complexity and challenges based on various factors such as code complexity, usage of advanced algorithms, number of contributions, pull requests, issues, and other relevant metrics.
 4. **Scoring**: The tool will assign a score to each repository based on the assessment results.
 5. **Selecting the Most Challenging Repository**: After analyzing all the repositories, the tool will identify and display the repository with the highest score as the most technically complex and challenging one.
-
-It uses [Langchain](https://langchain.com/), OpenAI API (gpt-3.5-turbo model), and FAISS as vector store which efficient Prompt Engineering under the hood. It considers different factors for determining the most complex repository such as algorithmic complexity, code complexity, coupling and cohesion between classes and modules, cyclomatic complexity, number of contributions, pull requests, issues, and other relevant metrics.
 
 ## Demo
 [Demo](https://repo-analyser.streamlit.app/)
